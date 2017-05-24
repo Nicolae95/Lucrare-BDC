@@ -1,0 +1,58 @@
+\section{Oracle SQL Stored Procedures (Subprograms)}
+\phantomsection
+\subsection{About Subprograms}
+Subprograms are named PL/SQL blocks that can take parameters and be invoked. PL/SQL has two types of subprograms called procedures and functions. Generally, you use a procedure to perform an action and a function to compute a value.
+
+Like unnamed or anonymous PL/SQL blocks, subprograms have a declarative part, an executable part, and an optional exception-handling part. The declarative part contains declarations of types, cursors, constants, variables, exceptions, and nested subprograms. These items are local and cease to exist when you exit the subprogram. The executable part contains statements that assign values, control execution, and manipulate Oracle data. The exception-handling part contains exception handlers, which deal with exceptions raised during execution.
+
+Consider the following procedure named debit\_account, which debits a bank account:
+
+\lstinputlisting[style=mystyle, language=SQL, caption={Example of subprogram, \cite{doc}}, label=list41,]{sourcecode/debit.sql}
+
+When invoked or called, this procedure accepts an account number and a debit amount. It uses the account number to select the account balance from the accts database table. Then, it uses the debit amount to compute a new balance. If the new balance is less than zero, an exception is raised; otherwise, the bank account is updated.
+
+\subsection{Advantages of Subprograms}
+Subprograms provide extensibility; that is, they let you tailor the PL/SQL language to suit your needs.Subprograms also provide modularity; that is, they let you break a program down into manageable, well-defined logic modules. This supports top-down design and the stepwise refinement approach to problem solving.
+
+Also, subprograms promote reusability and maintainability. Once validated, a subprogram can be used with confidence in any number of applications. Furthermore, only the subprogram is affected if its definition changes. This simplifies maintenance and enhancement.
+
+Finally, subprograms aid abstraction, the mental separation from particulars. To use subprograms, you must know what they do, not how they work. Therefore, you can design applications from the top down without worrying about implementation details. Dummy subprograms (stubs) allow you to defer the definition of procedures and functions until you test and debug the main program.
+
+\subsection{Procedures}
+A procedure is a subprogram that performs a specific action. You write procedures using the syntax
+\lstinputlisting[style=mystyle, language=SQL, caption={Example of a procedure in SQL Oracle, \cite{doc}}, label=list41,]{sourcecode/prodexample.sql}
+where parameter stands for the following syntax:
+
+parameter\_name [IN | OUT | IN OUT] datatype [{:= | DEFAULT} expression]
+
+You cannot impose the NOT NULL constraint on a parameter.
+
+Also, you cannot specify a constraint on the datatype. For example, the following declaration of emp\_id is illegal because it imposes a size constraint:
+
+PROCEDURE raise\_salary (emp\_id NUMBER(4)) IS ...  -- illegal; should be NUMBER
+
+A procedure has two parts: the specification and the body. The procedure specification begins with the keyword PROCEDURE and ends with the procedure name or a parameter list. Parameter declarations are optional. Procedures that take no parameters are written without parentheses.
+
+The procedure body begins with the keyword IS and ends with the keyword END followed by an optional procedure name. The procedure body has three parts: a declarative part, an executable part, and an optional exception-handling part.
+
+The declarative part contains local declarations, which are placed between the keywords IS and BEGIN. The keyword DECLARE, which introduces declarations in an anonymous PL/SQL block, is not used. The executable part contains statements, which are placed between the keywords BEGIN and EXCEPTION (or END). At least one statement must appear in the executable part of a procedure. The NULL statement meets this requirement. The exception-handling part contains exception handlers, which are placed between the keywords EXCEPTION and END.
+
+Consider the procedure raise\_salary, which increases the salary of an employee:
+\lstinputlisting[style=mystyle, language=SQL, caption={Procedure in SQL Oracle, \cite{doc}}, label=list41,]{sourcecode/salary.sql}
+When called, this procedure accepts an employee number and a salary increase amount. It uses the employee number to select the current salary from the emp database table. If the employee number is not found or if the current salary is null, an exception is raised. Otherwise, the salary is updated.
+
+A procedure is called as a PL/SQL statement. For example, you might call the procedure raise\_salary as follows:
+
+raise\_salary(emp\_num, amount);
+
+\subsection{Stored Subprograms}
+Generally, tools (such as Oracle Forms) that incorporate the PL/SQL engine can store subprograms locally for later, strictly local execution. However, to become available for general use by all tools, subprograms must be stored in an Oracle database.
+
+To create subprograms and store them permanently in an Oracle database, you use the CREATE PROCEDURE and CREATE FUNCTION statements, which you can execute interactively from SQL*Plus or Enterprise Manager. For example, you might create the procedure fire\_employee, as follows:
+
+\lstinputlisting[style=mystyle, language=SQL, caption={Stored subprograms in SQL Oracle, \cite{doc}}, label=list41,]{sourcecode/storedproc.sql}
+
+When creating subprograms, you can use the keyword AS instead of IS in the specification for readability.
+
+
+\clearpage

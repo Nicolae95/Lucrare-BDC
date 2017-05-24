@@ -1,0 +1,46 @@
+\section{Comparision between Stored procedures in PL-SQL and T-SQL}
+\phantomsection
+
+\subsection{Overloading}
+\textbf{Overloading is present only in SQL Oracle and is not supported by Sql Server.}\\
+
+PL/SQL lets you overload subprogram names. That is, you can use the same name for several different subprograms as long as their formal parameters differ in number, order, or datatype family.\\
+
+Suppose you want to initialize the first n rows in two index-by tables that were declared as follows:
+
+\lstinputlisting[style=mystyle, language=SQL, caption={Tables, \cite{doc}}, label=list41,]{sourcecode/table.sql}
+
+You might write the following procedure to initialize the index-by table named hiredate\_tab:
+
+\lstinputlisting[style=mystyle, language=SQL, caption={First procedure, \cite{doc}}, label=list41,]{sourcecode/init1.sql}
+
+And, you might write the next procedure to initialize the index-by table named sal\_tab:
+
+\lstinputlisting[style=mystyle, language=SQL, caption={First procedure, \cite{doc}}, label=list41,]{sourcecode/init2.sql}
+
+Because the processing in these two procedures is the same, it is logical to give them the same name.
+
+You can place the two overloaded initialize procedures in the same block, subprogram, or package. PL/SQL determines which of the two procedures is being called by checking their formal parameters.
+
+Consider the example below. If you call initialize with a DateTabTyp parameter, PL/SQL uses the first version of initialize. But, if you call initialize with a RealTabTyp parameter, PL/SQL uses the second version.
+\lstinputlisting[style=mystyle, language=SQL, caption={Calling both procedures, \cite{doc}}, label=list41,]{sourcecode/inittable.sql}
+
+\subsection{Packages}
+\textbf{Packages are present only in SQL Oracle and are not supported by Sql Server.}\\
+
+The specification is the interface to the package. It just DECLARES the types, variables, constants, exceptions, cursors, and subprograms that can be referenced from outside the package. In other words, it contains all information about the content of the package, but excludes the code for the subprograms.
+
+All objects placed in the specification are called public objects. Any subprogram not in the package specification but coded in the package body is called a private object.
+
+The following code snippet shows a package specification having a single procedure. You can have many global variables defined and multiple procedures or functions inside a package.
+\lstinputlisting[style=mystyle, language=SQL, caption={Package, \cite{doc}}, label=list41,]{sourcecode/package.sql}
+
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[width=0.80\textwidth]{nao_monitor}
+%    \caption{ Monitor Desktop}
+%    \label{fig:mesh7}
+%\end{figure}
+
+
+\clearpage

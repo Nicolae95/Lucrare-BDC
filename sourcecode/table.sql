@@ -1,0 +1,5 @@
+DECLARE
+   TYPE DateTabTyp IS TABLE OF DATE INDEX BY BINARY_INTEGER;
+   TYPE RealTabTyp IS TABLE OF REAL INDEX BY BINARY_INTEGER;
+   hiredate_tab DateTabTyp;
+   sal_tab      RealTabTyp;
